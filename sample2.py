@@ -55,7 +55,7 @@ def main():
             speed[1] = -speed[1]
 
 
-        pygame.time.wait(300)
+        pygame.time.wait(30)
 
         screen.fill(black)
         screen.blit(ball, ballrect)
