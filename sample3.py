@@ -1,9 +1,9 @@
 import sys
 import pygame
 
-'''
-    down\up\left\right movement
-'''
+
+#    down\up\left\right movement
+
 
 
 def main():
