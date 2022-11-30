@@ -3,6 +3,8 @@ import sys
 
 pygame.init()
 
+my_font = pygame.font.SysFont('Comic Sans MS', 18)
+
 CLOCK = pygame.time.Clock()
 SCREEN = pygame.display.set_mode((800, 800))
 pygame.display.set_caption("Jumping in PyGame")
@@ -15,11 +17,13 @@ Y_GRAVITY = 1
 JUMP_HEIGHT = 20
 Y_VELOCITY = JUMP_HEIGHT
 
-STANDING_SURFACE = pygame.transform.scale(pygame.image.load("assets/mario_standing.png"), (48, 64))
-JUMPING_SURFACE = pygame.transform.scale(pygame.image.load("assets/mario_jumping.png"), (48, 64))
+STANDING_MARIO = pygame.transform.scale(pygame.image.load("assets/mario_standing.png"), (48, 64))
+JUMPING_MARIO = pygame.transform.scale(pygame.image.load("assets/mario_jumping.png"), (48, 64))
+CURRENT_MARIO = STANDING_MARIO
 BACKGROUND = pygame.image.load("assets/background.png")
 
-mario_rect = STANDING_SURFACE.get_rect(center=(X_POSITION, Y_POSITION))
+color = (255,0,0)
+mario_rect = CURRENT_MARIO.get_rect(center=(X_POSITION, Y_POSITION))
 
 while True:
     for event in pygame.event.get():
@@ -29,12 +33,14 @@ while True:
 
     keys_pressed = pygame.key.get_pressed()
 
+    if keys_pressed[pygame.K_DOWN]: 
+        mario_rect = mario_rect.move([0, 10])  
+    elif keys_pressed[pygame.K_UP]: 
+        mario_rect = mario_rect.move([0, -10])  
     if keys_pressed[pygame.K_LEFT]:
-        speed = [-1, 0]    
-        mario_rect = mario_rect.move([-2, 0])  
+        mario_rect = mario_rect.move([-10, 0])  
     elif keys_pressed[pygame.K_RIGHT]: 
-        speed = [1, 0]    
-        mario_rect = mario_rect.move([2, 0])  
+        mario_rect = mario_rect.move([10, 0])  
 
     if keys_pressed[pygame.K_SPACE]:
         jumping = True
@@ -42,17 +48,22 @@ while True:
     SCREEN.blit(BACKGROUND, (0, 0))
     
     if jumping:
-        Y_POSITION -= Y_VELOCITY
         Y_VELOCITY -= Y_GRAVITY
+        
         if Y_VELOCITY < -JUMP_HEIGHT:
             jumping = False
             Y_VELOCITY = JUMP_HEIGHT
-        mario_rect = JUMPING_SURFACE.get_rect()
-        SCREEN.blit(JUMPING_SURFACE, mario_rect)
-    else:
-    # mario_rect = STANDING_SURFACE.get_rect()
-        SCREEN.blit(STANDING_SURFACE, mario_rect)
+            
+        CURRENT_MARIO = JUMPING_MARIO
         
+        mario_rect = mario_rect.move([0, -Y_VELOCITY])  
+    else:
+        CURRENT_MARIO = STANDING_MARIO
+
+    SCREEN.blit(CURRENT_MARIO, mario_rect)
+
+    text_surface = my_font.render(f'ballrect=({mario_rect.centerx} , {mario_rect.centery})', False, color)       
+    SCREEN.blit(text_surface, (20,20))
 
     pygame.display.update()
     CLOCK.tick(60)
