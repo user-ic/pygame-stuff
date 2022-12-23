@@ -19,28 +19,48 @@ Y_VELOCITY = JUMP_HEIGHT
 
 STANDING_MARIO = pygame.transform.scale(pygame.image.load("assets/mario_standing.png"), (48, 64))
 JUMPING_MARIO = pygame.transform.scale(pygame.image.load("assets/mario_jumping.png"), (48, 64))
+
 CURRENT_MARIO = STANDING_MARIO
+
 BACKGROUND = pygame.image.load("assets/background.png")
 
 color = (255,0,0)
 mario_rect = CURRENT_MARIO.get_rect(center=(X_POSITION, Y_POSITION))
 
+facing_right = True
+
 while True:
+    facing_flip = False
     for event in pygame.event.get():
-         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == ord ( "q" )): 
+        if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == ord ( "q" )): 
             pygame.quit()
             sys.exit()
+        
+
+        pressed_left = event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT
+        pressed_right = event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT
+
+        if (pressed_left or pressed_right) and facing_right != pressed_right: 
+            facing_right = pressed_right
+            facing_flip = True        
+
+        if facing_flip:
+            STANDING_MARIO = pygame.transform.flip(STANDING_MARIO, 1, 0)
+            JUMPING_MARIO = pygame.transform.flip(JUMPING_MARIO, 1, 0)
+            facing_flip = False
+
+        
 
     keys_pressed = pygame.key.get_pressed()
 
     if keys_pressed[pygame.K_DOWN]: 
-        mario_rect = mario_rect.move([0, 10])  
+        mario_rect = mario_rect.move([0, 4])  
     elif keys_pressed[pygame.K_UP]: 
-        mario_rect = mario_rect.move([0, -10])  
+        mario_rect = mario_rect.move([0, -4])  
     if keys_pressed[pygame.K_LEFT]:
-        mario_rect = mario_rect.move([-10, 0])  
+        mario_rect = mario_rect.move([-4, 0])  
     elif keys_pressed[pygame.K_RIGHT]: 
-        mario_rect = mario_rect.move([10, 0])  
+        mario_rect = mario_rect.move([4, 0])  
 
     if keys_pressed[pygame.K_SPACE]:
         jumping = True
