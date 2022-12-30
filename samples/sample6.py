@@ -30,7 +30,7 @@ mario_rect = CURRENT_MARIO.get_rect(center=(X_POSITION, Y_POSITION))
 facing_right = True
 
 while True:
-    facing_flip = False
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == ord ( "q" )): 
             pygame.quit()
@@ -42,12 +42,8 @@ while True:
 
         if (pressed_left or pressed_right) and facing_right != pressed_right: 
             facing_right = pressed_right
-            facing_flip = True        
-
-        if facing_flip:
             STANDING_MARIO = pygame.transform.flip(STANDING_MARIO, 1, 0)
             JUMPING_MARIO = pygame.transform.flip(JUMPING_MARIO, 1, 0)
-            facing_flip = False
 
         
 
