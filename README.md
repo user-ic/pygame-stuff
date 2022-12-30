@@ -12,4 +12,5 @@ setuptools 58.1.0
 `sample2.py` - user controls the start\stop action in a fixed direction    
 `sample3.py` - user controls ball movement using arrow keys    
 `sample5.py` - mario jumps, sample from [Jumping-PyGame](https://github.com/baraltech/Jumping-PyGame)
-`sample6.py` - mario moves around
+`sample6.py` - mario moves around and turns the body towards the moving direction
+`sample7.py` - `sample6` using OOP for the player
