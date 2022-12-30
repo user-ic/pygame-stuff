@@ -1,7 +1,9 @@
 import sys
 import pygame
 
-
+'''
+    stop\start movement
+'''
 
 
 def main():
@@ -17,33 +19,32 @@ def main():
 
     screen = pygame.display.set_mode(size)
 
-    ball = pygame.image.load("intro_ball.gif")
+    ball = pygame.image.load("assets\intro_ball.gif")
     ballrect = ball.get_rect()
 
     color = (255,0,0)
+    moveBall = False
 
     while True:
 
         for event in pygame.event.get():
             
             if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == ord ( "q" )): 
-                sys.exit()
-            # elif event.type == pygame.KEYDOWN and event.key == ord ( "w" ): 
-            #     speed[1] = -speed[1]
-            # elif event.type == pygame.KEYDOWN and event.key == ord ( "a" ): 
-            #     speed[1] = -speed[1]
-            # elif event.type == pygame.KEYDOWN and event.key == ord ( "s" ): 
-            #     speed[1] = -speed[1]
-            # elif event.type == pygame.KEYDOWN and event.key == ord ( "d" ): 
-            #     speed[1] = -speed[1]                
-            elif event.type == pygame.KEYDOWN and event.key == ord ( "r" ): 
+                sys.exit()              
+            elif event.type == pygame.KEYDOWN and event.key == ord ( "r" ):                
+                moveBall = True 
                 speed[0] = -speed[0]
                 speed[1] = -speed[1]
-                break
-                
-
-        ballrect = ballrect.move(speed)
+                break           
+            elif event.type == pygame.KEYDOWN and event.key == ord ( "o" ):                 
+                moveBall = True 
+                break                
+            elif event.type == pygame.KEYDOWN and event.key == ord ( "p" ):                
+                moveBall = False                 
+                break                
         
+        if moveBall:
+            ballrect = ballrect.move(speed)  
 
         # left right move in relation to x
         # top bottom move in relation to y
@@ -54,7 +55,7 @@ def main():
             speed[1] = -speed[1]
 
 
-        pygame.time.wait(300)
+        pygame.time.wait(30)
 
         screen.fill(black)
         screen.blit(ball, ballrect)

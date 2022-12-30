@@ -19,7 +19,7 @@ def main():
 
     screen = pygame.display.set_mode(size)
 
-    ball = pygame.image.load("intro_ball.gif")
+    ball = pygame.image.load("assets\intro_ball.gif")
     ballrect = ball.get_rect()
 
     color = (255,0,0)

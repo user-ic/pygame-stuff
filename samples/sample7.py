@@ -1,0 +1,1 @@
+# make sample6 into oop -> class Player
